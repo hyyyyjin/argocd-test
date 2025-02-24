@@ -1,11 +1,11 @@
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
 metadata:
   name: sample-app
   labels:
     app: sample-app
 spec:
-  replicas: 2
+  replicas: 3
   selector:
     matchLabels:
       app: sample-app
@@ -15,7 +15,14 @@ spec:
         app: sample-app
     spec:
       containers:
-        - name: sample-app
-          image: amdp-registry.skamdp.org/amdp-rde/test-server:blue 
-          ports:
-            - containerPort: 80
+      - name: sample-app
+        image: amdp-registry.skamdp.org/amdp-rde/test-server:blue 
+        ports:
+        - containerPort: 80
+  strategy:
+    canary:
+      steps:
+      - setWeight: 10  # 10% Canary 트래픽
+      - pause: {duration: 30s}  # 30초 대기 후 검토
+      - setWeight: 50  # 50% Canary 트래픽
+      - pause: {}  # 무기한 대기 (운영자가 검토 후 최종 전환)
