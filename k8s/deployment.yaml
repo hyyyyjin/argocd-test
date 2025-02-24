@@ -16,6 +16,6 @@ spec:
     spec:
       containers:
         - name: sample-app
-          image: nginx
+          image: amdp-registry.skamdp.org/amdp-rde/test-server:blue 
           ports:
             - containerPort: 80
