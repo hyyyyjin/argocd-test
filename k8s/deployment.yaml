@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: sample-app
-        image: amdp-registry.skamdp.org/amdp-rde/test-server:blue-mirror 
+        image: amdp-registry.skamdp.org/amdp-rde/test-server:blue
         ports:
         - containerPort: 80
   strategy:
